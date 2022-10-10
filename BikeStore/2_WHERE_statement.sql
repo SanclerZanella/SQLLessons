@@ -35,6 +35,17 @@ SELECT * FROM production.products WHERE category_id = 1;
 
 SELECT * FROM sales.customers;
 
+/*
+
+	The sequence of this statement runs in, is as follows:
+		FROM	- The 'FROM' clause is checked first.
+					What table(s) do we need to use to get the result from.
+
+		WHERE	- How does the data need to be filtered.
+
+		SELECT	- What do we need to return.
+
+*/
 SELECT first_name, last_name, [state] FROM sales.customers WHERE [state] = 'CA';
 
 SELECT Count(*) FROM sales.customers WHERE [state] = 'CA';
