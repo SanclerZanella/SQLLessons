@@ -1,37 +1,61 @@
-﻿-- Retrieve all products whose brand_id is 1, 2 or 4:
-SELECT * FROM production.products WHERE brand_id = 1 OR brand_id = 2 OR brand_id = 4;
+﻿/*
 
--- Retrieve the products whose list_price is less than 200
--- and the products whose list_price is greater than 600:
-SELECT * FROM production.products WHERE list_price < 200 OR list_price > 600;
+	Logical Operators:
+		
+		AND:
+			The AND Operator can be used to combine the results of multiple expressions and
+			both must be evaluated to true.
+			|---------------------------------------------------|
+			|			 | TRUE		 | FALSE	| UNKNOWN		|
+			|------------|-----------|----------|---------------|
+			|TRUE		 | TRUE      | FALSE	| UNKOWN		|
+			|FALSE       | FALSE     | FALSE	| FALSE         |
+			|UNKNOWN     | UNKOWN    | FALSE	| UNKOWN        |
+			|---------------------------------------------------|
 
--- Retrieve the products whose list_price is greater than 200
--- and the products whose list_price is less than 600:
-SELECT * FROM production.products WHERE list_price > 200 AND list_price < 600;
+			Syntax:
+				SELECT field_list FROM table_name WHERE expression AND expression;
 
--- Retrieve the products with brand_id 1, brand_id 2 whose price is greater than 800:
+		OR:
+			The OR Operator can be used to check the results of multiple expressions and
+			at least one condition must be evaluated to true.
+			|---------------------------------------------------|
+			|			 | TRUE		 | FALSE	| UNKNOWN		|
+			|------------|-----------|----------|---------------|
+			|TRUE		 | TRUE      | TRUE	    | TRUE			|
+			|FALSE       | TRUE      | FALSE	| UNKOWN        |
+			|UNKNOWN     | TRUE      | UNKOWN	| UNKOWN        |
+			|---------------------------------------------------|
+
+			Syntax:
+				SELECT field_list FROM table_name WHERE expression OR expression;
+
+		NOT:
+			The NOT operator reverses the result.
+
+			Syntax:
+				SELECT field_list FROM table_name WHERE state != 'TX';
+
+		IN:
+			The IN operator is used to check if a value exist in a list.
+			Returns true or false.
+
+			Syntax:
+				column_name | experession IN(v1, v2, v3);
+
+*/
+
 SELECT * FROM production.products
-WHERE (brand_id = 1 OR brand_id = 2) AND list_price > 800;
 
--- Retrieve all products whose model_year is not 2017:
-SELECT * FROM production.products WHERE model_year != 2017;
-SELECT * FROM production.products WHERE model_year <> 2017;
-SELECT * FROM production.products WHERE model_year NOT LIKE 2017;
+-- Retrieve a list of products in category 1 with a list_price greater than 400:
+	-- 1. Get the data from the products table.
+	-- 2. All data.
+	-- 3. Filter by category.
+	-- 4. Filter by price.
 
--- Retrieve all products whose brand_id is 1, 2 or 4 using IN:
-SELECT * FROM production.products WHERE brand_id IN(1, 2, 4);
+	SELECT * FROM production.products WHERE category_id = 1 AND list_price > 400;
 
--- Retrieve all products and skip those whose brand_id is 1, 2 or 4 using IN:
-SELECT * FROM production.products WHERE brand_id NOT IN(1, 2, 4);
+-- Retrieve a list of products in category 1 with a list_price greater than 400 whose
+-- brand_id is 1:
 
--- Retrieve all products and skip those whose brand_id is 1, 2 or 4 using EXCEPT:
-SELECT * FROM production.products
-EXCEPT (
-			SELECT * FROM production.products  -- Subquery
-			WHERE brand_id IN(1, 2, 4)
-		);
-
--- Retrieve all products whose list_price is greater than or equal to 149.99
--- or less than 200.00:
-SELECT * FROM production.products WHERE list_price >= 149.99 AND list_price < 200.00;
-SELECT * FROM production.products WHERE list_price BETWEEN 149.99 AND 200.00;
+	SELECT * FROM production.products WHERE category_id = 1 AND list_price > 400 AND brand_id = 1;
