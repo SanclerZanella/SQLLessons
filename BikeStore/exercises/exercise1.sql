@@ -70,7 +70,7 @@ ORDER BY	3, 2;
 */
 
 SELECT		COUNT(o.order_id) AS 'No Of Orders Placed By Marcelene Boyer'
-FROM		sales.orders as o
+FROM		sales.orders o
 INNER JOIN	sales.staffs s
 ON			s.staff_id = o.staff_id
 WHERE		s.first_name = 'Marcelene' AND s.last_name = 'Boyer';
@@ -80,7 +80,7 @@ WHERE		s.first_name = 'Marcelene' AND s.last_name = 'Boyer';
 
 	 6	Show the total value of stock on hand for the store with id 2.
 
-		Answer: SELECT		SUM(p.list_price) AS 'Stock Value on Hand of Store 2'
+		Answer: SELECT		SUM(p.list_price * s.quantity)
 				FROM		production.products p
 				INNER JOIN	production.stocks s
 				ON			p.product_id = s.product_id
@@ -88,12 +88,22 @@ WHERE		s.first_name = 'Marcelene' AND s.last_name = 'Boyer';
 
 */
 
-SELECT		SUM(p.list_price) AS 'Stock Value on Hand of Store 2'
+-- Wrong Way:
+
+--SELECT		SUM(p.list_price) AS 'Stock Value on Hand of Store 2'
+--FROM		production.products p
+--INNER JOIN	production.stocks s
+--ON			p.product_id = s.product_id
+--WHERE		s.store_id = 2;
+
+-- Right Way:
+
+SELECT		SUM(p.list_price * s.quantity) AS 'Stock Value on Hand of Store 2'
 FROM		production.products p
 INNER JOIN	production.stocks s
 ON			p.product_id = s.product_id
 WHERE		s.store_id = 2;
-
+ 
 
 /*
 
@@ -107,8 +117,8 @@ WHERE		s.store_id = 2;
 
 */
 
-SELECT		AVG(p.list_price) AS 'Average price of Electric Bikes'
+SELECT		CAST(ROUND(AVG(p.list_price), 2) AS money) AS 'Average price of Electric Bikes'
 FROM		production.products p
 INNER JOIN	production.categories c
 ON			c.category_id = p.category_id
-WHERE		c.category_name = 'Electric Bikes';
+WHERE		c.category_name = 'Electric Bikes';  -- could use LIKE '%electric%'
