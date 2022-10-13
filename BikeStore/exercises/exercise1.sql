@@ -26,14 +26,14 @@ SELECT DISTINCT city FROM sales.customers;
 		2 and the required date is before 30th April 2018 sorted in ascending order of customer
 		id.
 
-		Answer: SELECT		order_id, customer_id, store_id, required_date
+		Answer: SELECT		order_id, customer_id, store_id
 				FROM		SALES.orders
 				WHERE		order_status = 2 AND required_date < '2018-04-30'
 				ORDER BY	customer_id;
 
 */
 
-SELECT order_id, customer_id, store_id, required_date
+SELECT order_id, customer_id, store_id
 FROM sales.orders
 WHERE order_status = 2 AND required_date < '2018-04-30'
 ORDER BY customer_id;
@@ -80,15 +80,17 @@ WHERE		s.first_name = 'Marcelene' AND s.last_name = 'Boyer';
 
 	 6	Show the total value of stock on hand for the store with id 2.
 
-		Answer: SELECT	SUM(quantity) AS 'Stock on Hand of Store 2'
-				FROM	production.stocks
-				WHERE	store_id = 2;
+		Answer: SELECT		SUM(p.list_price) AS 'Stock Value on Hand of Store 2'
+				FROM		production.products p
+				INNER JOIN	production.stocks s
+				ON			p.product_id = s.product_id
+				WHERE		s.store_id = 2;
 
 */
 
 SELECT		SUM(p.list_price) AS 'Stock Value on Hand of Store 2'
-FROM		production.stocks s
-INNER JOIN	production.products p
+FROM		production.products p
+INNER JOIN	production.stocks s
 ON			p.product_id = s.product_id
 WHERE		s.store_id = 2;
 
