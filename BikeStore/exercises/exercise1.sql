@@ -86,9 +86,11 @@ WHERE		s.first_name = 'Marcelene' AND s.last_name = 'Boyer';
 
 */
 
-SELECT	SUM(quantity) AS 'Stock on Hand of Store 2'
-FROM	production.stocks
-WHERE	store_id = 2;
+SELECT		SUM(p.list_price) AS 'Stock Value on Hand of Store 2'
+FROM		production.stocks s
+INNER JOIN	production.products p
+ON			p.product_id = s.product_id
+WHERE		s.store_id = 2;
 
 
 /*
